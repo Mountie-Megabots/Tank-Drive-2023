@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
+import java.lang.Math;
 import edu.wpi.first.wpilibj.XboxController;
 
 /**
@@ -26,7 +26,7 @@ public class Robot extends TimedRobot {
   private final CANSparkMax m_leftFollower = new CANSparkMax(2, MotorType.kBrushless);
   private final CANSparkMax m_rightLead = new CANSparkMax(3, MotorType.kBrushless);
   private final CANSparkMax m_rightFollower = new CANSparkMax(4, MotorType.kBrushless);
-  private final DifferentialDrive m_drive = new DifferentialDrive(m_leftLead, m_rightLead);
+  //private final DifferentialDrive m_drive = new DifferentialDrive(m_leftLead, m_rightLead);
   
 
   @Override
@@ -41,8 +41,8 @@ public class Robot extends TimedRobot {
     m_rightLead.restoreFactoryDefaults();
     m_rightFollower.restoreFactoryDefaults();
 
-    m_leftFollower.follow(m_leftLead);
-    m_rightFollower.follow(m_rightLead);
+    //m_leftFollower.follow(m_leftLead);
+    //m_rightFollower.follow(m_rightLead);
 
   }
 
@@ -51,6 +51,18 @@ public class Robot extends TimedRobot {
 
     //m_leftLead.set(controller.getLeftY());
     //m_rightLead.set(controller.getRightY());
-    m_drive.arcadeDrive(controller.getRightX(),controller.getLeftY(), true);
+    //m_drive.arcadeDrive(controller.getRightX(),controller.getLeftY(), true);
+
+    if (Math.abs(controller.getRightTriggerAxis()) > 0){
+      m_leftFollower.set(Math.pow(controller.getRightTriggerAxis() / 3, 0.5));
+    } else {
+      m_leftFollower.set(0);
+    }
+    if (Math.abs(controller.getLeftY()) > 0.15){
+      m_leftLead.set(controller.getLeftY() / 3 );
+    } else {
+      m_leftLead.set(0); 
+    }
+    
   }
 }

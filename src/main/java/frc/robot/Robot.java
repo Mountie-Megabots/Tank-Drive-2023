@@ -45,7 +45,7 @@ public class Robot extends TimedRobot {
 
     m_leftLead.set(controller.getLeftY());
     m_rightLead.set(controller.getRightY());
-    m_drive.arcadeDrive(controller.getRightX(),controller.getLeftY(), true);   
+    m_drive.arcadeDrive(controller.getRightX() * 0.6,controller.getLeftY(), true);   
 
   }
 }

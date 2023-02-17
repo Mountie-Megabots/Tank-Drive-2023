@@ -69,7 +69,12 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kRightBumper.value)
         .onTrue(new InstantCommand(() -> m_robotDrive.setMaxOutput(0.5)))
         .onFalse(new InstantCommand(() -> m_robotDrive.setMaxOutput(1)));
+    
+        new JoystickButton(m_driverController, Button.kBack.value)
+        .onTrue(new InstantCommand(() -> m_robotDrive.resetOdometry(new Pose2d())));
+    
   }
+
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

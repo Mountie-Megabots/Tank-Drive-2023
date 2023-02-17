@@ -50,6 +50,10 @@ public class DriveSubsystem extends SubsystemBase {
 
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
+    m_leftLead.restoreFactoryDefaults();
+    m_leftFollower.restoreFactoryDefaults();
+    m_rightLead.restoreFactoryDefaults();
+    m_rightFollower.restoreFactoryDefaults();
     // We need to invert one side of the drivetrain so that positive voltages
     // result in both sides moving forward. Depending on how your robot's
     // gearbox is constructed, you might have to invert the left side instead.
@@ -81,8 +85,16 @@ public class DriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Left Encoder", m_leftEncoder.getPosition());
     SmartDashboard.putNumber("Right Encoder", m_rightEncoder.getPosition());
 
+    double gravVector[] = {0,0,0};
+    m_gyro.getGravityVector(gravVector);
+    SmartDashboard.putNumber("Grav X", gravVector[0]);
+    SmartDashboard.putNumber("Grav Y", gravVector[1]);
+    SmartDashboard.putNumber("Grav Z", gravVector[2]);
     m_odometry.update(
         this.getGyroRotation(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
+
+    SmartDashboard.putNumber("Pose X", m_odometry.getPoseMeters().getX());
+    SmartDashboard.putNumber("Pose Y", m_odometry.getPoseMeters().getY());
   }
 
   /**
